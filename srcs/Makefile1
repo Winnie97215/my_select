@@ -1,0 +1,62 @@
+##
+## Makefile for minishell1 in /u/all/catuss_a/cu/rendu/c/minishell1
+## 
+## Made by axel catusse
+## Login   <catuss_a@epitech.net>
+## 
+## Started on  Thu Jun  3 21:56:58 2010 axel catusse
+## Last update Sun Jun 20 18:27:03 2010 axel catusse
+##
+
+################################################################################################
+NAME 		=	mysh
+INCLUDE         =       -I../include/ -L../lib
+CC_FreeBSD      =       gcc
+RM_FreeBSD      =       rm -f
+CFLAGS          +=      -W -Wall -ansi -pedantic $(INCLUDE)
+LIB		=	-lmy
+OBJS            =       $(SRCS:.c=.o)
+DIR		=	../
+################################################################################################
+SRCS		=	main.c				\
+			read_on_stdin.c			\
+			binary_cmd.c			\
+			builtins_cmd.c			\
+			count_function.c		\
+			get_next_line.c			\
+			check_function_env.c		\
+			cpy_env.c			\
+			display_env.c			\
+			my_signal.c			\
+			setenv.c			\
+			exit_mysh.c			\
+			cd_mysh.c			\
+			unsetenv.c			\
+			str_wordtab_concat_path.c	\
+			xfree.c
+
+################################################################################################
+$(NAME)         :	$(OBJS)
+		@$(CC_$(HOSTTYPE)) -o $(NAME) $(OBJS) $(CFLAGS) $(LIB)
+		@cp $(NAME) $(DIR)
+		@printf "\n\033[32m     ---[$(NAME) HAS BEEN CREATED]---\033[37m\n\n"
+
+all             :       $(NAME)
+
+clean           :
+		@$(RM_$(HOSTTYPE)) $(OBJS)
+		@rm -rf *~
+
+fclean		:	clean
+		@$(RM_$(HOSTTYPE)) $(NAME)
+
+re              :       fclean all
+
+.c.o            :
+		@printf "\033[36m[$(CC_$(HOSTTYPE))]\033[37m  $<\n"
+		@$(CC_$(HOSTTYPE)) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+.PHONY          :       all clean fclean re
+
+.SUFFIXES       :       .c .o
+################################################################################################
